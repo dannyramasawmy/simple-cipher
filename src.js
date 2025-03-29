@@ -5,17 +5,15 @@ let LETTERS = "abcdefghijklmnopqrstuvwxyz";
 let LETTERS_ALLOWED = LETTERS + "_?";
 
 map_letter = (character) => {
-    
+
     var out = character
-    let map_id = `map-${character}`  
+    let map_id = `map-${character}`
     var ele = document.getElementById(map_id)
-    
-    if (ele)
-    {
+
+    if (ele) {
         let element_value = ele.value.toLowerCase()
-        if (LETTERS_ALLOWED.includes(element_value))
-        {
-            out = element_value       
+        if (LETTERS_ALLOWED.includes(element_value)) {
+            out = element_value
         }
     }
 
@@ -23,42 +21,54 @@ map_letter = (character) => {
 }
 
 
-function update_unused_letters()
-{
-    var all_used_letters = []
-    for (letter of LETTERS.split(""))
-    {
-        let map_id = `map-${letter}`         
+function fill_blanks() {
+    for (letter of LETTERS.split("")) {
+        let map_id = `map-${letter}`
         var ele = document.getElementById(map_id)
-        
-        if (ele)
-            {
-                let element_value = ele.value.toLowerCase()
-                if (LETTERS.includes(element_value))
-                    {
-                all_used_letters.push(element_value)       
+
+        if (ele) {
+            let element_value = ele.value
+            console.log(`Test: '${element_value}'`)
+            if (element_value == '' || element_value == ' ') {
+                console.log("In here!")
+                ele.value = '_'
             }
         }
-    }   
+    }
+}
+
+
+function update_unused_letters() {
+    var all_used_letters = []
+    for (letter of LETTERS.split("")) {
+        let map_id = `map-${letter}`
+        var ele = document.getElementById(map_id)
+
+        if (ele) {
+            let element_value = ele.value.toLowerCase()
+            if (LETTERS.includes(element_value)) {
+                all_used_letters.push(element_value)
+            }
+        }
+    }
     let used_letters = all_used_letters.join('')
 
     var unused = []
-    for (letter of LETTERS.split(""))
-    {
-        if (!used_letters.includes(letter))
-        {
+    for (letter of LETTERS.split("")) {
+        if (!used_letters.includes(letter)) {
             unused.push(letter)
         }
     }
-    
+
     document.getElementById(UNUSED_LETTERS_ID).innerText = unused.join(',')
 }
 
-function decipher()
-{
+function decipher() {
     console.log("Starting de-cipher")
     var raw_input_text = document.getElementById(INPUT_TEXT_ID).value
     console.log(raw_input_text)
+
+    fill_blanks()
 
     let decipher = raw_input_text
         .toLowerCase()
@@ -67,12 +77,11 @@ function decipher()
         .join('')
 
     // debug
-    for (letter of LETTERS.split(""))
-    {
-        let map_id = `map-${letter}`         
-        var ele = document.getElementById(map_id)
-        console.log(`${letter} => ${ele.value}`)
-    }
+    // for (letter of LETTERS.split("")) {
+    //     let map_id = `map-${letter}`
+    //     var ele = document.getElementById(map_id)
+    //     console.log(`${letter} => ${ele.value}`)
+    // }
 
     var output_element = document.getElementById(OUTPUT_TEXT_ID)
     output_element.innerText = decipher

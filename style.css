@@ -21,7 +21,7 @@
 body {
     background-color: var(--body-color);
     
-    font-family: Verdana, sans-serif;
+    font-family:monospace, monospace;
     font-weight: bold;
     text-align: center;
     
