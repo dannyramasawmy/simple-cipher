@@ -2,10 +2,11 @@ let APP_BODY_ID = "app-body";
 let INPUT_TEXT_ID = "text-to-decipher";
 let OUTPUT_TEXT_ID = "output-text";
 let UNUSED_LETTERS_ID = "unused-letters";
+
 let SCRAMBLE_BUTTON = "scramble-button";
 let RESET_MAP_BUTTON = "reset-map-button";
-
-
+let RESET_INPUT_BUTTON = "reset-input-button";
+let COPY_OUTPUT_BUTTON = "copy-output-button";
 
 let LETTERS = "abcdefghijklmnopqrstuvwxyz";
 let LETTERS_ALLOWED = LETTERS + "_?";
@@ -61,12 +62,16 @@ function update_unused_letters() {
 
     var unused = []
     for (letter of LETTERS.split("")) {
-        if (!used_letters.includes(letter)) {
-            unused.push(letter)
-        }
+
+
+        var to_push = letter == 'm' ? "<br>" : ""
+        to_push += used_letters.includes(letter)
+            ? "_"
+            : letter.toUpperCase()
+        unused.push(to_push)
     }
 
-    document.getElementById(UNUSED_LETTERS_ID).innerText = unused.join(',')
+    document.getElementById(UNUSED_LETTERS_ID).innerHTML = unused.join(',')
 }
 
 function decipher() {
@@ -89,8 +94,7 @@ function decipher() {
 }
 
 
-function printMapping()
-{
+function printMapping() {
     for (letter of LETTERS.split("")) {
         let map_id = `map-${letter}`
         var ele = document.getElementById(map_id)
@@ -99,7 +103,7 @@ function printMapping()
 }
 
 
-function reset_mapping() {
+function resetMapping() {
     console.log("Restting letters")
     for (letter of LETTERS.split("")) {
         let map_id = `map-${letter}`
@@ -108,10 +112,11 @@ function reset_mapping() {
         if (ele) {
             ele.value = '_'
         }
-    }    
+    }
 }
 
 function shuffleArray(unshuffled) {
+    console.log("Shuffling Array")
     let shuffled = unshuffled
         .map(value => ({ value, sort: Math.random() }))
         .sort((a, b) => a.sort - b.sort)
@@ -128,13 +133,24 @@ function scramble() {
     for (let idx = 0; idx < letters.length; idx++) {
         let map_id = `map-${letters[idx]}`
         var ele = document.getElementById(map_id)
-  
+
         if (ele) {
             ele.value = shuffled_letters[idx]
         }
-    }    
+    }
 }
 
+function resetInputText() {
+    console.log("Resetting Input")
+    document.getElementById(INPUT_TEXT_ID).value = "Copy and paste text to decipher..."
+}
+
+function copyOutputText() {
+    console.log("Copying Text")
+    var copyText = document.getElementById(OUTPUT_TEXT_ID);
+    navigator.clipboard.writeText(copyText.value);
+    alert("Output text copied: " + copyText.value);
+}
 
 document.getElementById(APP_BODY_ID).addEventListener(
     "click", decipher
@@ -149,8 +165,18 @@ document.getElementById(SCRAMBLE_BUTTON).addEventListener(
 )
 
 document.getElementById(RESET_MAP_BUTTON).addEventListener(
-    "click", reset_mapping
+    "click", resetMapping
 )
 
-reset_mapping()
+document.getElementById(RESET_INPUT_BUTTON).addEventListener(
+    "click", resetInputText
+)
+
+document.getElementById(COPY_OUTPUT_BUTTON).addEventListener(
+    "click", copyOutputText
+)
+
+
+resetInputText()
+resetMapping()
 decipher()
