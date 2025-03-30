@@ -1,8 +1,15 @@
+let APP_BODY_ID = "app-body";
 let INPUT_TEXT_ID = "text-to-decipher";
 let OUTPUT_TEXT_ID = "output-text";
 let UNUSED_LETTERS_ID = "unused-letters";
+let SCRAMBLE_BUTTON = "scramble-button";
+let RESET_MAP_BUTTON = "reset-map-button";
+
+
+
 let LETTERS = "abcdefghijklmnopqrstuvwxyz";
 let LETTERS_ALLOWED = LETTERS + "_?";
+
 
 map_letter = (character) => {
 
@@ -28,7 +35,6 @@ function fill_blanks() {
 
         if (ele) {
             let element_value = ele.value
-            console.log(`Test: '${element_value}'`)
             if (element_value == '' || element_value == ' ') {
                 console.log("In here!")
                 ele.value = '_'
@@ -76,13 +82,6 @@ function decipher() {
         .map(map_letter)
         .join('')
 
-    // debug
-    // for (letter of LETTERS.split("")) {
-    //     let map_id = `map-${letter}`
-    //     var ele = document.getElementById(map_id)
-    //     console.log(`${letter} => ${ele.value}`)
-    // }
-
     var output_element = document.getElementById(OUTPUT_TEXT_ID)
     output_element.innerText = decipher
 
@@ -90,10 +89,68 @@ function decipher() {
 }
 
 
-document.getElementById("the-app").addEventListener(
+function printMapping()
+{
+    for (letter of LETTERS.split("")) {
+        let map_id = `map-${letter}`
+        var ele = document.getElementById(map_id)
+        console.log(`${letter} => ${ele.value}`)
+    }
+}
+
+
+function reset_mapping() {
+    console.log("Restting letters")
+    for (letter of LETTERS.split("")) {
+        let map_id = `map-${letter}`
+        var ele = document.getElementById(map_id)
+
+        if (ele) {
+            ele.value = '_'
+        }
+    }    
+}
+
+function shuffleArray(unshuffled) {
+    let shuffled = unshuffled
+        .map(value => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value)
+    return shuffled
+}
+
+function scramble() {
+    console.log("Scrambling Letters")
+
+    let letters = LETTERS.split("")
+    let shuffled_letters = shuffleArray(LETTERS.split(""))
+
+    for (let idx = 0; idx < letters.length; idx++) {
+        let map_id = `map-${letters[idx]}`
+        var ele = document.getElementById(map_id)
+  
+        if (ele) {
+            ele.value = shuffled_letters[idx]
+        }
+    }    
+}
+
+
+document.getElementById(APP_BODY_ID).addEventListener(
     "click", decipher
 )
-document.getElementById("text-to-decipher").addEventListener(
+
+document.getElementById(INPUT_TEXT_ID).addEventListener(
     "change", decipher
 )
+
+document.getElementById(SCRAMBLE_BUTTON).addEventListener(
+    "click", scramble
+)
+
+document.getElementById(RESET_MAP_BUTTON).addEventListener(
+    "click", reset_mapping
+)
+
+reset_mapping()
 decipher()
