@@ -53,7 +53,7 @@ body {
     background-color: var(--total-display-color);
 }
 
-.green-colour-dark {
+.blue-colour {
     background-color: var(--button-color);
 }
 
@@ -62,6 +62,9 @@ body {
 }
 
 
+.bento-thinish {
+    height: 150px;
+}
 .bento-thin {
     height: 100px;
 }

@@ -25,11 +25,9 @@
 
         <div class="row g-4">
 
-            <!-- Large item -->
+            <!-- Input text area -->
             <div class="col-md-6">
-                <div class="bento-item bento-tall green-colour-dark">
-
-                    <!-- Input text area -->
+                <div class="bento-item bento-tall blue-colour">
                     <div class="text-view">
                         <h4>Input</h4>
                         <textarea name="text-to-decipher" id="text-to-decipher"
@@ -39,36 +37,38 @@
                 </div>
             </div>
 
-            <!-- Large item -->
+            <!-- Output text area -->
             <div class="col-md-6">
-                <div class="bento-item bento-tall green-colour-dark">
-
-                    <!-- Output text area -->
+                <div class="bento-item bento-tall blue-colour">
                     <div class="text-view">
                         <h4>Output</h4>
                         <textarea readonly name="text-to-decipher" id="output-text">
                         </textarea>
-
-                        
-
-                        <!-- <div class="total-button">
-                            <p class="output-text" id="output-text"></p>
-                        </div> -->
                     </div>
                 </div>
             </div>
 
-            <!-- Medium item -->
+            <!-- Letter frequency display -->
+            <div class="col-md-12">
+                <div class="bento-item bento-thinish blue-colour wrap-text text-light">
+                    <div>
+                        <h4>Letter Frequency</h4>
+                        <p id="letter-frequency" class="wrap-text "></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Letters unused -->
             <div class="col-md-12">
                 <div class="bento-item bento-thin green-colour wrap-text text-light">
                     <div>
-                        <h4>Letters unused</h4>
+                        <h4>Unmapped Letters</h4>
                         <p id="unused-letters" class="wrap-text "></p>
                     </div>
                 </div>
             </div>
 
-            <!-- Medium item -->
+            <!-- Mapping A -> I  -->
             <div class="col-md-4">
                 <div class="bento-item bento-tall green-colour text-light">
                     <table class="number">
@@ -113,7 +113,7 @@
             </div>
 
 
-            <!-- Medium item -->
+            <!-- Mapping J -> R  -->
             <div class="col-md-4">
                 <div class="bento-item bento-tall green-colour text-light">
                     <table class="number">
@@ -157,7 +157,7 @@
                 </div>
             </div>
 
-            <!-- Medium item -->
+            <!-- Mapping S -> Z  -->
             <div class="col-md-4">
                 <div class="bento-item bento-tall green-colour text-light">
                     <table class="number">
@@ -198,25 +198,28 @@
                 </div>
             </div>
 
-            <!-- Buttons --> 
+            <!-- Copy output button --> 
             <div class="col-md-3">
                 <div class="bento-item bento-thin btn btn-outline-success" id="copy-output-button">
                     <h3>Copy Output</h3>
                 </div>
             </div>
 
+            <!-- Scramble output button --> 
             <div class="col-md-3">
                 <div class="bento-item bento-thin btn btn-outline-info" id="scramble-button">
                     <h3>Scramble</h3>
                 </div>
             </div>
 
+            <!-- Reset map button --> 
             <div class="col-md-3">
                 <div class="bento-item bento-thin btn btn-outline-warning" id="reset-map-button">
                     <h3>Reset Map</h3>
                 </div>
             </div>
 
+            <!-- Reset input button --> 
             <div class="col-md-3">
                 <div class="bento-item bento-thin btn btn-outline-danger" id="reset-input-button">
                     <h3>Reset Input</h3>

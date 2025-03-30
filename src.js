@@ -2,6 +2,7 @@ let APP_BODY_ID = "app-body";
 let INPUT_TEXT_ID = "text-to-decipher";
 let OUTPUT_TEXT_ID = "output-text";
 let UNUSED_LETTERS_ID = "unused-letters";
+let LETTER_FREQUENCY_ID = "letter-frequency";
 
 let SCRAMBLE_BUTTON = "scramble-button";
 let RESET_MAP_BUTTON = "reset-map-button";
@@ -12,7 +13,24 @@ let LETTERS = "abcdefghijklmnopqrstuvwxyz";
 let LETTERS_ALLOWED = LETTERS + "_?";
 
 
-map_letter = (character) => {
+function countLetterFrequency()
+{
+    var raw_input_text = document.getElementById(INPUT_TEXT_ID).value.toLowerCase()
+    var encoding = []
+    for (letter of LETTERS.split("")) {
+        let num = raw_input_text.split("").filter(c => c == letter).length
+        encoding.push( { 'letter': letter, 'num': num })
+    }
+
+    let encoding_string = encoding
+        .toSorted((a,b) => b.num - a.num)
+        .map(x => `${x.letter}:${x.num}`)
+        .join(', ')
+
+    document.getElementById(LETTER_FREQUENCY_ID).innerHTML = encoding_string
+}
+
+function mapLetter(character) {
 
     var out = character
     let map_id = `map-${character}`
@@ -29,7 +47,7 @@ map_letter = (character) => {
 }
 
 
-function fill_blanks() {
+function fillBlanks() {
     for (letter of LETTERS.split("")) {
         let map_id = `map-${letter}`
         var ele = document.getElementById(map_id)
@@ -45,7 +63,7 @@ function fill_blanks() {
 }
 
 
-function update_unused_letters() {
+function updateUnusedLetters() {
     var all_used_letters = []
     for (letter of LETTERS.split("")) {
         let map_id = `map-${letter}`
@@ -79,18 +97,19 @@ function decipher() {
     var raw_input_text = document.getElementById(INPUT_TEXT_ID).value
     console.log(raw_input_text)
 
-    fill_blanks()
+    fillBlanks()
 
     let decipher = raw_input_text
         .toLowerCase()
         .split('')
-        .map(map_letter)
+        .map(mapLetter)
         .join('')
 
     var output_element = document.getElementById(OUTPUT_TEXT_ID)
     output_element.innerText = decipher
 
-    update_unused_letters()
+    updateUnusedLetters()
+    countLetterFrequency()
 }
 
 
